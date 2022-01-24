@@ -1,0 +1,36 @@
+Poletko - czyli nasza plansza.
+Kwadrat 10x10.
+Na każdym ze 100 kwadratów można sadzić nasiona.
+
+####
+# Uprawa
+
+Każdy kwadracik z roślinami trzeba codziennie podlewać (woda kosztuje).
+Po czasie wegetacji odpowiednim dla danego gatunku,
+roślina jest gotowa do zbioru.
+
+Żeby ją zebrać trzeba zapłacić małą sumę, a po zebraniu natychmiast
+dostaje się pieniądze za plony.
+
+#######
+# Combo plonów:
+Jeżeli grupa 5 kwadracików tworzy pewną figurę, to jest za to naliczana premia.
+
+Innymi słowy, wszystko co nie jest izolowane dostaje pewną premię.
+
+Premia jest niezależna od konfiguracji, ważna jest tylko suma przyległych kwadracików.
+Np. Poniższe figurki (złożone z 4 kwadracików) są jednakowo punktowane:
+
+X
+XX
+X
+
+XXXX
+
+XX
+XX
+
+X
+XXX
+
+#######

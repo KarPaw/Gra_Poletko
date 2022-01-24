@@ -1,0 +1,19 @@
+Cechy rośliny
+
+
+Nazwa
+Cena za nasiona
+Cena skupu gotowej rośliny
+Czas wegetacji (ile dni rośnie, aż będzie dobra)
+Cena za wodę
+Szkodniki, które atakują daną roślinę
+
+
+------
+Trzeba stworzyć kilka archetypów roślin.
+
+1. Tania, szybko rośnie, mała cena za wodę, mały zysk, szkodniki normalne (STARTER)
+2. Droższe, rośnie trochę wolniej, woda lekko droższa, zysk większy, szkodniki normalne (Lekko lepsze niż starter)
+3. (Długie, drogie, ryzykowne)
+4. (Wolny, stabilny zysk)
+5.
