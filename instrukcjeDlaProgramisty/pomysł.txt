@@ -8,7 +8,7 @@ Schemat Dnia:
 1. Faza zakupów
 
 Możemy zajrzeć do sklepu.
-Za monety można kupić np. ziarna Marchwi.
+Za monety można kupić npr. ziarna Marchwi.
 
 
 2. Faza sadzenia (może być jedną fazą z fazą zakupów)
