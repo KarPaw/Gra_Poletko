@@ -1,4 +1,4 @@
-from gra_poletko.rośliny import Roślina
+from gra_poletko.rośliny.roślina import Roślina
 
 
 class Marchew(Roślina):
