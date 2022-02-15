@@ -12,3 +12,6 @@ class Roślina:
         self.__woda_cena = woda_cena
 
         # self.__szkodniki = szkodniki
+
+    def blah(self):
+        pass
