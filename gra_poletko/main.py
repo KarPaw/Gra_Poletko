@@ -3,21 +3,33 @@
 # from gra_poletko.rośliny import *
 from gra_poletko.rośliny.marchew import Marchew
 from gra_poletko.plansza.plansza import Plansza
+from gra_poletko.sklep.sklep import Sklep
+
 
 def ustaw_ceny_w_sklepie():
-    pass
+    ziarnaCeny = {
+        "Marchew": Marchew.cenaWSklepie(),
+        #"Ziemniak": Ziemniak.cenaWSklepie(),
+    }
+    skl.setZiarna(ziarnaCeny)
+
+    # return "Ustaiwono ceny w sklepie"
+
+
 
 
 if __name__ == "__main__":
 
+    test = Marchew.cenaWSklepie()
+    print(test)
 
-    # tutaj sprawdzamy wszystko
-    print("Hello")
-    # r1 = Roślina("Buk", 11, 22, 33, 1)
+    # mar = Marchew()
+    # pla = Plansza(2)
+    # ros = Roślina("Dąb")
 
-    m1 = Marchew()
+    skl = Sklep()
+    print(skl.getZiarna)
+    ustaw_ceny_w_sklepie()
+    print(skl.getZiarna)
 
-    p1 = Plansza(2)
     i=0
-    # r2 = Roślina("Dąb")
-    # m1 = Marchew
