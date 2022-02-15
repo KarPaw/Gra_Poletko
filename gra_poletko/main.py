@@ -2,7 +2,7 @@
 
 # from gra_poletko.rośliny import *
 from gra_poletko.rośliny.marchew import Marchew
-
+from gra_poletko.plansza.plansza import Plansza
 
 def ustaw_ceny_w_sklepie():
     pass
@@ -17,6 +17,7 @@ if __name__ == "__main__":
 
     m1 = Marchew()
 
-    i = 0
+    p1 = Plansza(2)
+    i=0
     # r2 = Roślina("Dąb")
     # m1 = Marchew

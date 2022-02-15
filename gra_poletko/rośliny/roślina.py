@@ -12,6 +12,6 @@ class Roślina(ABC):
         self.__woda_cena = woda_cena
         # self.__szkodniki = szkodniki
 
-
-    def blah(self):
-        pass
+    @property
+    def getCzasWegetacji(self):
+        return self.__czas_wegetacji
