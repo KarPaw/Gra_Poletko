@@ -1,5 +1,5 @@
 Poletko - czyli nasza plansza.
-Kwadrat 10x10.st izolowane dostaje pewną premię.
+Kwadrat 10x10.
 
 Na każdym ze 100 kwadratów można sadzić nasiona.
 
@@ -17,7 +17,7 @@ dostaje się pieniądze za plony.
 # Combo plonów:
 Jeżeli grupa 5 kwadracików tworzy pewną figurę, to jest za to naliczana premia.
 
-Innymi słowy, wszystko co nie je
+Innymi słowy, wszystko co nie jest izolowane dostaje pewną premię.
 Premia jest niezależna od konfiguracji, ważna jest tylko suma przyległych kwadracików.
 Np. Poniższe figurki (złożone z 4 kwadracików) są jednakowo punktowane:
 
