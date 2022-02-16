@@ -31,9 +31,10 @@ if __name__ == "__main__":
         mar = Marchew()
         plansza = Plansza(10, rol)
         # plansza.zasiej(mar, 1)
+
         rol.zasiew()
 
-    test_siania_marchwi()
+    # test_siania_marchwi()
 
     def test_sklepu():
         skl = Sklep()
@@ -42,9 +43,19 @@ if __name__ == "__main__":
         rol.zakupy(skl)
         rol.pokazStan()
 
-    # test_sklepu()
+    test_sklepu()
+
+    def slownik_z_obiektem():
+
+        m1 = Marchew()
+        s = {
+            m1: 1,
+            "poz. 2.": 3
+        }
+
+        return s
 
 
-
+    # test_siania_marchwi()
 
     i=0

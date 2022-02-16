@@ -1,12 +1,11 @@
 from gra_poletko.plansza.poleJedno import PoleJedno as p
 from gra_poletko.rośliny.roślina import Roślina
-from gra_poletko.rolnik.rolnik import Rolnik
 
 
 class Plansza():
     __slots__ = ["__pola", "__czyje"]
 
-    def __init__(self, liczba_pól, czyje:Rolnik):
+    def __init__(self, liczba_pól, czyje):
         # Lista o N polach
         self.__pola = tuple(p(k) for k in range(liczba_pól))
         # self.__czyje = czyje
@@ -18,6 +17,9 @@ class Plansza():
     def dojrzewanie(self):
         for pole in self.__pola:
             pole.czy_gotowe_do_zbioru()
+
+    def getPola(self):
+        return self.__pola
 
     # def zasiej(self, roślina:Roślina, na_którym_polu:int):
     #     """Na którym polu: liczymy od 1."""

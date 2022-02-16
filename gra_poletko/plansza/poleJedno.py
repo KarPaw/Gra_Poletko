@@ -5,7 +5,7 @@ class PoleJedno():
 
     def __init__(self, id):
         self.__id = id
-        # self.__zasianaRoslina:Roślina = Roślina()
+        self.__zasianaRoslina = None
         self.__kiedyZasiano = None
         self.__czyPodlane = True
         self.__gotowe = False

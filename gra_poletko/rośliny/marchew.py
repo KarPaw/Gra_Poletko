@@ -24,3 +24,6 @@ class Marchew(Roślina):
     def cenaWSklepie():
         #TODO Przydaloby sie zeby to zaciaglao te dane troche lepiej...
         return 100
+
+    # def __str__(self):
+    #     return self.getNazwa
