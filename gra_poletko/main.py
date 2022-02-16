@@ -5,6 +5,8 @@ from gra_poletko.plansza.plansza import Plansza
 from gra_poletko.sklep.sklep import Sklep
 from gra_poletko.rolnik.rolnik import Rolnik
 
+from gra_poletko.StałeUniwersalne import Singleton as S
+
 
 def ustaw_ceny_w_sklepie(sklep):
     ziarnaCeny = {
@@ -21,8 +23,8 @@ def pustee():
 
 
 if __name__ == "__main__":
+    czas = S.dzienSymulacji
 
-    # test = Marchew.cenaWSklepie()
 
     rol = Rolnik(Plansza(10))
 
@@ -33,7 +35,6 @@ if __name__ == "__main__":
 
         rol.zasiew()
 
-    # test_siania_marchwi()
 
     def test_sklepu():
         skl = Sklep()
@@ -44,17 +45,6 @@ if __name__ == "__main__":
 
     test_sklepu()
 
-    def slownik_z_obiektem():
-
-        m1 = Marchew()
-        s = {
-            m1: 1,
-            "poz. 2.": 3
-        }
-
-        return s
-
-
-    # test_siania_marchwi()
+    test_siania_marchwi()
 
     i=0

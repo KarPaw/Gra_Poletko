@@ -57,7 +57,7 @@ class Rolnik:
 
             j = -1
             for ros in roślinyWszystkie:
-                if ros.getNazwa == produkt.capitalize():
+                if ros.getNazwa.__get__(ros) == produkt.capitalize():
                     j = roślinyWszystkie.index(ros)
 
             if j == -1:
@@ -66,7 +66,7 @@ class Rolnik:
 
             prodEkwipunek = roślinyWszystkie[j]
 
-            doZaplaty = ziarna[f"{produkt}"] * liczba
+            doZaplaty = ziarna[f"{produkt.capitalize()}"] * liczba
             if doZaplaty == 0:
                 return
             if self.__liczba_monet >= doZaplaty:
@@ -110,7 +110,7 @@ class Rolnik:
             # roślinyWszystkie = tuple(self.getZiarna.keys())
             for j in range(len(roślinyWszystkie)):
                 roślina: Roślina = roślinyWszystkie[j]
-                if roślina.getNazwa.lower() == roślinaInput.lower():
+                if roślina.getNazwa.__get__(roślina).lower() == roślinaInput.lower():
                     # iZnal = j
                     return j
                 elif not roślinaInput: # Pusty napis

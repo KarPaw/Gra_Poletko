@@ -1,5 +1,3 @@
-
-
 class Sklep:
     __slots__ = ["__ziarna", "__srodkiOchronyRoslin"]
 
