@@ -12,8 +12,15 @@ class Sklep:
 
     @property
     def getZiarna(self):
+        # Do implementacji
         return self.__ziarna
 
+    @property
+    def getOferta(self):
+        # Ladnie sie wyswietla uzytkownikowi
+        c = "\nW sklepie znajdują sie nastepujace produkty:"
+        d = "\n{Produkt: Cena za sztukę}\n"
+        return f"{c}{d}{self.getZiarna} \n"
     # def setSrodkiOchrony(self, slownikSrodkowOchronyZCenami):
     #     self.__srodkiOchronyRoslin = slownikSrodkowOchronyZCenami
 
