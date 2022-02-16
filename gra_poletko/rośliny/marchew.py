@@ -19,10 +19,9 @@ class Marchew(Roślina):
             , Marchew.woda_cena
         )
 
-    # @property
+    #bez powstania obiektu
     @staticmethod
     def cenaWSklepie():
-        # TODO Przydaloby sie zeby to zaciaglao te dane troche lepiej...
         return Marchew.nasiono_cena
 
     @property
@@ -32,6 +31,7 @@ class Marchew(Roślina):
     @property
     def getCzasWegetacji(self):
         return Marchew.czas_wegetacji
+
     @property
     def getCenaSkup(self):
         return Marchew.skup_cena

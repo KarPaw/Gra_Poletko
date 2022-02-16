@@ -1,9 +1,8 @@
 from gra_poletko.bcolors import bcolors
 from gra_poletko.sklep.sklep import Sklep
 from gra_poletko.rośliny.roślina import Roślina
-from gra_poletko.rośliny.marchew import Marchew
 from gra_poletko.plansza.poleJedno import PoleJedno
-# from gra_poletko.plansza.plansza import Plansza
+
 
 class Rolnik:
 
@@ -15,7 +14,7 @@ class Rolnik:
         self.__ekwipunek = (
             # 0 = nasiona | 1 =  srodki ochrony roslin
             {
-                katalog[0]: 5  # Marchew #TODO Dajemy 5 sztuk na start?
+                katalog[0]: 5  # Marchew # Dajemy 5 sztuk na start
                 # ,katalog[1]: 0 # Ziemniaki
             },
             {
@@ -36,6 +35,7 @@ class Rolnik:
     @property
     def getZiarna(self):
         return self.__ekwipunek[0]
+
     @property
     def getPoleRolnika(self):
         return self.__poleRolnika
@@ -71,7 +71,6 @@ class Rolnik:
                 return
             if self.__liczba_monet >= doZaplaty:
                 self.__liczba_monet -= doZaplaty
-                # TODO Tutaj trzeba produkt String -> Roślina
                 self.__ekwipunek[0][prodEkwipunek] += liczba
                 print(f"Zakupiono produkt: {produkt} x {liczba}.")
             else:
@@ -96,15 +95,13 @@ class Rolnik:
         print("Koniec zakupów.")
 
     def zasiew(self):
-        # (self, roślina:Roślina, na_którym_polu:int):
         """Na którym polu: liczymy od 1."""
-        # TODO Musi sprawdzac, czy masz taką roślinę w ekwipunku i odpowiednio zmniejszyć liczbę sztuk
+        # Sprawdza, czy masz taką roślinę w ekwipunku i odpowiednio zmniejsza liczbę sztuk
         print(self.getEkwipunek)
-
-        # TODO To musi przeksztalcac String -> Roślina
 
         # znajdz rolisne z katalogu po nazwie. indeks katalogu...
         roślinyWszystkie = tuple(self.getZiarna.keys())
+
         def szuakanie_indeksu():
             roślinaInput = input("Wybierz roślinę do zasiania\n>")
             # roślinyWszystkie = tuple(self.getZiarna.keys())
@@ -113,7 +110,7 @@ class Rolnik:
                 if roślina.getNazwa.__get__(roślina).lower() == roślinaInput.lower():
                     # iZnal = j
                     return j
-                elif not roślinaInput: # Pusty napis
+                elif not roślinaInput:  # Pusty napis
                     return -1
                 else:
                     print(f"{bcolors.FAIL}Nie posiadasz takiej sadzonki.\nWybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
@@ -129,8 +126,7 @@ class Rolnik:
             polaDoZasiewu = tuple(int(x) for x in
                                   input("Podaj numery pól do zasiewu oddzielone spacją,\n>").split())
 
-            # pDZ = (3, 5, 6, 1, 10)
-            #TODO Sprawdz czy Wystarczy sadzonek
+            # Sprawdza czy Wystarczy sadzonek
             ilePol = len(polaDoZasiewu)
             ileSadzonek = self.getZiarna[wybranaRoślina]
             if ilePol > ileSadzonek:
@@ -140,7 +136,7 @@ class Rolnik:
                 print("Nie wybrano pól.")
             else:
                 for i in polaDoZasiewu:
-                    pj:PoleJedno = self.__poleRolnika.getPola()[i-1]
+                    pj: PoleJedno = self.__poleRolnika.getPola()[i-1]
                     if not pj.coZasiano:
                         pj.zasiej_roślinę(wybranaRoślina)
                         self.getZiarna[wybranaRoślina] -= 1
@@ -149,7 +145,6 @@ class Rolnik:
                         print(f"Na polu {i} już coś rośnie.")
                         continue
             print(f"Zasiano {wybranaRoślina} na możliwych polach spośród {polaDoZasiewu}")
-
 
         zasiej_na_polach()
         odpowiedz = input("Czy chcesz siać dalej? T/N\n>")
@@ -170,8 +165,5 @@ class Rolnik:
 
         self.__liczba_monet += zarobek-oplata
 
-
     def podlewanie(self):
         pass
-
-

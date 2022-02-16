@@ -17,14 +17,9 @@ def ustaw_ceny_w_sklepie(sklep):
 
     # return "Ustaiwono ceny w sklepie"
 
-def pustee():
-    ...
-
-
 
 if __name__ == "__main__":
     czas = S.dzienSymulacji
-
 
     rol = Rolnik(Plansza(10))
 
@@ -53,4 +48,4 @@ if __name__ == "__main__":
 
     print(rol.getLiczbaMonet)
 
-    i=0
+    i = 0

@@ -5,7 +5,7 @@ class Sklep:
         self.__ziarna = None
         self.__srodkiOchronyRoslin = None
 
-    def setZiarna(self, slownikZiarnoCena:dict):
+    def setZiarna(self, slownikZiarnoCena: dict):
         self.__ziarna = slownikZiarnoCena
 
     @property
@@ -21,6 +21,3 @@ class Sklep:
         return f"{c}{d}{self.getZiarna} \n"
     # def setSrodkiOchrony(self, slownikSrodkowOchronyZCenami):
     #     self.__srodkiOchronyRoslin = slownikSrodkowOchronyZCenami
-
-
-

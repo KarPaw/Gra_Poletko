@@ -1,7 +1,7 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
-class Roślina():
+class Roślina(ABC):
     __slots__ = ["__nazwa", "__nasiono_cena", "__skup_cena", "__czas_wegetacji", "__woda_cena"]
 
     def __init__(self, nazwa, nasiono_cena, skup_cena, czas_wegetacji, woda_cena):  # , szkodniki):
@@ -16,15 +16,19 @@ class Roślina():
     @property
     def getNazwa(self):
         return self.__nazwa
+
     @property
     def getCzasWegetacji(self):
         return self.__czas_wegetacji
+
     @property
     def getCenaNasiono(self):
         return self.__nasiono_cena
+
     @property
     def getCenaSkup(self):
         return self.__skup_cena
+
     @property
     def getCenaWoda(self):
         return self.__woda_cena
