@@ -5,11 +5,9 @@ from gra_poletko.rośliny.roślina import Roślina
 class Plansza():
     __slots__ = ["__pola", "__czyje"]
 
-    def __init__(self, liczba_pól, czyje):
+    def __init__(self, liczba_pól):
         # Lista o N polach
         self.__pola = tuple(p(k) for k in range(liczba_pól))
-        # self.__czyje = czyje
-        czyje.przypiszPoletko(self)
 
     def ktorePodlane(self):
         return [pole.czyPodlano() for pole in self.__pola]

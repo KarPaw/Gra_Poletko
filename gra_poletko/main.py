@@ -1,4 +1,4 @@
- # Główny plik gry
+# Główny plik gry
 
 from gra_poletko.rośliny.marchew import Marchew
 from gra_poletko.plansza.plansza import Plansza
@@ -9,7 +9,7 @@ from gra_poletko.rolnik.rolnik import Rolnik
 def ustaw_ceny_w_sklepie(sklep):
     ziarnaCeny = {
         "Marchew": Marchew.cenaWSklepie(),
-        #"Ziemniak": Ziemniak.cenaWSklepie(),
+        # "Ziemniak": Ziemniak.cenaWSklepie(),
     }
     sklep.setZiarna(ziarnaCeny)
 
@@ -24,12 +24,11 @@ if __name__ == "__main__":
 
     # test = Marchew.cenaWSklepie()
 
-    rol = Rolnik()
+    rol = Rolnik(Plansza(10))
 
     def test_siania_marchwi():
 
         mar = Marchew()
-        plansza = Plansza(10, rol)
         # plansza.zasiej(mar, 1)
 
         rol.zasiew()

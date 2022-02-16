@@ -1,3 +1,4 @@
+from gra_poletko.bcolors import bcolors
 from gra_poletko.sklep.sklep import Sklep
 from gra_poletko.rośliny.roślina import Roślina
 from gra_poletko.rośliny.marchew import Marchew
@@ -6,13 +7,10 @@ from gra_poletko.plansza.poleJedno import PoleJedno
 
 class Rolnik:
 
-    def __init__(self):
+    def __init__(self, plansza):
         self.__liczba_monet = 10000  # na start
-        self.__poleRolnika = None
-        katalog = [
-            Marchew()
-            # ,Ziemniak()
-        ]
+        self.__poleRolnika = plansza
+        katalog = Roślina.__subclasses__()
 
         self.__ekwipunek = (
             # 0 = nasiona | 1 =  srodki ochrony roslin
@@ -38,6 +36,9 @@ class Rolnik:
     @property
     def getZiarna(self):
         return self.__ekwipunek[0]
+    @property
+    def getPoleRolnika(self):
+        return self.__poleRolnika
 
     def pokazStan(self):
         print("Liczba monet i ekwipunek Rolnika")
@@ -60,7 +61,8 @@ class Rolnik:
                     j = roślinyWszystkie.index(ros)
 
             if j == -1:
-                return Exception("Nie można dodać do ekwipunku..")
+                print(bcolors.FAIL + "Nie można dodać do ekwipunku.." + bcolors.ENDC)
+                return
 
             prodEkwipunek = roślinyWszystkie[j]
 
@@ -73,9 +75,7 @@ class Rolnik:
                 self.__ekwipunek[0][prodEkwipunek] += liczba
                 print(f"Zakupiono produkt: {produkt} x {liczba}.")
             else:
-                print(
-                    Exception(f"Niewystarczająca liczba monet - masz ich {self.__liczba_monet}.")
-                )
+                print(f"{bcolors.FAIL}Niewystarczająca liczba monet - masz ich {self.__liczba_monet}.{bcolors.ENDC}")
 
         def pojedynczyZakup():
             print(oferta)
@@ -116,8 +116,7 @@ class Rolnik:
                 elif not roślinaInput: # Pusty napis
                     return -1
                 else:
-                    print(
-                        Exception("Nie posiadasz takiej sadzonki.\nWybierz inną lub wprowadź pusty napis."))
+                    print(f"{bcolors.FAIL}Nie posiadasz takiej sadzonki.\nWybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
                     szuakanie_indeksu()
 
         iZnal = szuakanie_indeksu()
