@@ -12,9 +12,20 @@ class Plansza():
     def ktorePodlane(self):
         return [pole.czyPodlano() for pole in self.__pola]
 
-    def dojrzewanie(self):
-        for pole in self.__pola:
-            pole.czy_gotowe_do_zbioru()
+    def polaGotoweDoZbioru(self):
+
+        gotowePola = []
+        # for pole in self.__pola:
+        #     if pole.czy_gotowe_do_zbioru():
+        #         gotowePola.append(pole.__id)
+
+        for i in range(len(self.__pola)):
+            p = self.__pola[i]
+            if p.czy_gotowe_do_zbioru():
+                gotowePola.append(i)
+
+        print(gotowePola)
+        return gotowePola
 
     def getPola(self):
         return self.__pola

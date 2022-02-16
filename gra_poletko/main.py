@@ -47,4 +47,10 @@ if __name__ == "__main__":
 
     test_siania_marchwi()
 
+    print(rol.getLiczbaMonet)
+    S.dzienSymulacji = 10
+    rol.zbiory()
+
+    print(rol.getLiczbaMonet)
+
     i=0

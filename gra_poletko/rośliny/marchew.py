@@ -29,5 +29,17 @@ class Marchew(Roślina):
     def getNazwa(self):
         return Marchew.nazwa
 
+    @property
+    def getCzasWegetacji(self):
+        return Marchew.czas_wegetacji
+    @property
+    def getCenaSkup(self):
+        return Marchew.skup_cena
+
     # def __str__(self):
     #     return self.getNazwa
+
+#
+# if __name__ == "__main__":
+#     m1 = Marchew()
+#     print(isinstance(m1, Roślina))

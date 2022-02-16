@@ -1,5 +1,7 @@
 from gra_poletko.rośliny.roślina import Roślina
 from gra_poletko.StałeUniwersalne import Singleton as S
+from gra_poletko.bcolors import bcolors
+
 
 class PoleJedno():
     __slots__ = ["__zasianaRoslina", "__kiedyZasiano", "__czyPodlane", "__gotowe", "__id"]
@@ -33,7 +35,10 @@ class PoleJedno():
 
     def czy_gotowe_do_zbioru(self):
         posiana = self.__zasianaRoslina
-        potrzebneDni = posiana.getCzasWegetacji
+        ff = type(posiana)
+        if not posiana:
+            return self.__gotowe
+        potrzebneDni = posiana.getCzasWegetacji.__get__(posiana)
         # TODO ObecnyDzien
         obecnyDzien = S.dzienSymulacji
         ileMinelo = obecnyDzien - self.kiedyZasiano
@@ -41,5 +46,23 @@ class PoleJedno():
         if ileMinelo >= potrzebneDni:
             self.__gotowe = True
 
+        return self.__gotowe
+
+    def resetuj(self):
+        self.__zasianaRoslina = None
+        self.__kiedyZasiano = None
+        self.__czyPodlane = True
+        self.__gotowe = False
+
     def zbierzPlon(self):
-        pass
+        # Zwrcaca zarobioną kwotę z pojedynczego pola
+
+        r = self.__zasianaRoslina
+        zarobek = int(r.getCenaSkup.__get__(r))
+        self.resetuj()
+
+        return zarobek
+
+
+
+

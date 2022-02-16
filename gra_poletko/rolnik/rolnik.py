@@ -158,15 +158,20 @@ class Rolnik:
         else:
             print("Koniec fazy siania.")
 
+    def zbiory(self):
+        polaDoZbioru = self.__poleRolnika.polaGotoweDoZbioru()
+        # TODO Opłata miała zależeć od rośliny... Ale jeszcze jest stała, odgórna.
+        oplata = len(polaDoZbioru) * 10
+        zarobek = 0
+        for i in polaDoZbioru:
+            p = self.__poleRolnika.getPola()[i]
+            zarobek += p.zbierzPlon()
+            p.resetuj()
 
+        self.__liczba_monet += zarobek-oplata
 
-
-
-        # pole = self.__pola[na_którym_polu-1]
-        # pole.zasiej_roślinę(roślina))
 
     def podlewanie(self):
         pass
 
-    def zbiory(self):
-        pass
+
