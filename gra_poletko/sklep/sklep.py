@@ -21,6 +21,6 @@ class Sklep:
         # Ladnie sie wyswietla uzytkownikowi
         c = "\nW sklepie znajdują sie nastepujace produkty:"
         d = "\n{Produkt: Cena za sztukę}\n"
-        return f"{c}{d}{bcolors.WARNING}{self.getZiarna}{bcolors.ENDC}\n"
+        return f"{bcolors.WARNING}{c}{d}{bcolors.ENDC}{bcolors.OKBLUE}{self.getZiarna}{bcolors.ENDC}\n"
     # def setSrodkiOchrony(self, slownikSrodkowOchronyZCenami):
     #     self.__srodkiOchronyRoslin = slownikSrodkowOchronyZCenami

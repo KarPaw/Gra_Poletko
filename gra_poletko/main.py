@@ -15,8 +15,6 @@ def ustaw_ceny_w_sklepie(sklep):
     }
     sklep.setZiarna(ziarnaCeny)
 
-    # return "Ustaiwono ceny w sklepie"
-
 
 def ustawienia_początkowe():
     S.dzienSymulacji = 1
@@ -28,41 +26,41 @@ def ustawienia_początkowe():
 
 
 def faza_siania():
-    print(f"{bcolors.HEADER}Faza siania.{bcolors.ENDC}")
+    print(f"{bcolors.HEADER}\nFaza siania.{bcolors.ENDC}")
+    rol.pokazStan()
     rol.zasiew()
 
 
 def faza_kupna():
-    print(f"{bcolors.HEADER}Faza kupna.{bcolors.ENDC}")
+    print(f"{bcolors.HEADER}\nFaza kupna.{bcolors.ENDC}")
     rol.pokazStan()
     rol.zakupy(skl)
-    rol.pokazStan()
 
 
 def faza_zbiorów():
-    print(f"{bcolors.HEADER}Faza zbirów.{bcolors.ENDC}")
+    print(f"{bcolors.HEADER}\nFaza zbirów.{bcolors.ENDC}")
     rol.zbiory()
 
 
 def faza_podlewania():
-    print(f"{bcolors.HEADER}Faza podlewania.{bcolors.ENDC}")
+    print(f"{bcolors.HEADER}\nFaza podlewania.{bcolors.ENDC}")
     rol.podlewanie()
 
 
 def dzien():
     faza_kupna()
     faza_siania()
-    # print(f"Liczba monet: {rol.getLiczbaMonet}")
     faza_zbiorów()
     faza_podlewania()
     print(f"{bcolors.WARNING}Liczba monet na koniec {S.dzienSymulacji}. dnia: {rol.getLiczbaMonet}{bcolors.WARNING}")
-    S.dzienSymulacji += 1
+    S.dzienSymulacji += 2
+    #TODO Do testow co 2 dzien.
 
 
 def symuluj(liczbaDni):
     print(f"{bcolors.HEADER}Gra trwająca {liczbaDni} dni rozpoczyna się.\n{bcolors.ENDC}")
     for k in range(liczbaDni):
-        print(f"{bcolors.HEADER}Dzień dobry!\nJest dzień:{S.dzienSymulacji}.")
+        print(f"{bcolors.HEADER}Dzień dobry!\nJest dzień {S.dzienSymulacji}.")
         dzien()
 
 

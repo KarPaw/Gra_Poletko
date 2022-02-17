@@ -44,69 +44,109 @@ class Rolnik:
         return self.__poleRolnika
 
     def pokazStan(self):
-        print("Liczba monet i ekwipunek Rolnika")
-        print("Monety:", self.__liczba_monet)
-        print("Ekwipunek:\n", self.__ekwipunek)
+        print(f"{bcolors.BOLD}{bcolors.UNDERLINE}>> Przedmioty i Monety<<{bcolors.ENDC}")
+        print(f"{bcolors.BOLD}Monety: {self.__liczba_monet}")
+        print(f"Ekwipunek:{bcolors.ENDC}")
+        # Ladne printowanie zawartosci
+        for i in range(len(self.__ekwipunek)):
+            if i == 0:
+                print("\tZiarna:")
+            elif i == 1:
+                return  # TODO Narazie Środki ochrony są niewidoczne.
+                # print("Srodki Ochrony Roslin:")
+
+            nazwy_roślin = [roślina.nazwa for roślina in self.__ekwipunek[i].keys()]
+
+            pary = zip(nazwy_roślin, self.__ekwipunek[i].values())
+            for para in pary:
+                print(f"\t{bcolors.OKBLUE}{para}{bcolors.ENDC}")
+            # for para in self.__ekwipunek[i]:
+            #     print(f"\t{bcolors.OKBLUE}{para}{bcolors.ENDC}")
 
     def zakupy(self, sklep: Sklep):
         # Otwieranie
         oferta = sklep.getOferta
         ziarna = sklep.getZiarna
 
+        def pobierz_odpowiedz():
+            while True:
+                odp = input("Czy chcesz kupić coś jeszcze T/N:\n>").lower()
+                if odp == "t" or odp == "n":
+                    break
+            return odp
+
         # Kupowanie
         def kupZiarna(produkt, liczba):
             # Szukanie Indeksu W krotce
             roślinyWszystkie = tuple(self.getZiarna.keys())
-
             j = -1
+
+            if liczba <= 0:
+                return j
+
             for ros in roślinyWszystkie:
                 if ros.getNazwa.__get__(ros) == produkt.capitalize():
                     j = roślinyWszystkie.index(ros)
 
             if j == -1:
-                print(bcolors.FAIL + "Nie można dodać do ekwipunku.." + bcolors.ENDC)
-                return
+                print(bcolors.FAIL + "Nie można dodać do ekwipunku..." + bcolors.ENDC)
+                return j
 
             prodEkwipunek = roślinyWszystkie[j]
 
             doZaplaty = ziarna[f"{produkt.capitalize()}"] * liczba
             if doZaplaty == 0:
-                return
+                print(f"Nie można sprzedać 0 sztuk")
+                return j
             if self.__liczba_monet >= doZaplaty:
                 self.__liczba_monet -= doZaplaty
                 self.__ekwipunek[0][prodEkwipunek] += liczba
-                print(f"Zakupiono produkt: {produkt} x {liczba}.")
+                print(f"{bcolors.WARNING}Zakupiono produkt: {produkt} x {liczba}.{bcolors.ENDC}")
             else:
                 print(f"{bcolors.FAIL}Niewystarczająca liczba monet - masz ich {self.__liczba_monet}.{bcolors.ENDC}")
+
+            return j
 
         def pojedynczyZakup():
             print(oferta)
             produkt = input("Podaj nazwę produktu, który chcesz zakupić (bez cudzysłowów):\n>")
-            liczba = int(input("Podaj liczbę sztuk:\n>"))
-            if liczba <= 0:
-                print(f"Niepoprawna liczba sztuk {liczba}. Zakup anulowany.\n")
+            if not produkt:
+                print("Nie wybrano produktu.")
+                pojedynczyZakup()
+            liczba = input("Podaj liczbę sztuk:\n>")
+            # if not liczba or liczba == "0":
+            #     print(f"{bcolors.FAIL}Nic nie kupiono.{bcolors.ENDC}")
+            #     liczba = 0
+
+            try:
+                liczba = int(liczba)
+            except ValueError:
                 liczba = 0
 
-            kupZiarna(produkt, liczba)
+            if liczba < 0:
+                print(f"{bcolors.FAIL}Niepoprawna liczba sztuk {liczba}.{bcolors.ENDC}")
 
-            odpowiedz = input("Czy chcesz kupić coś jeszcze T/N:\n>")
-            return odpowiedz
+            czyKupiono = kupZiarna(produkt, liczba)
+            return czyKupiono
 
-        if pojedynczyZakup() == "T":
-            pojedynczyZakup()
+        cK = pojedynczyZakup()
+        if cK == -1:
+            print(f"{bcolors.FAIL}Nie dokonano zakupu.{bcolors.ENDC}")
 
-        print("Koniec zakupów.")
+        odpowiedz = pobierz_odpowiedz()
+        if odpowiedz == "t":
+            self.zakupy(sklep)
 
     def zasiew(self):
         """Na którym polu: liczymy od 1."""
         # Sprawdza, czy masz taką roślinę w ekwipunku i odpowiednio zmniejsza liczbę sztuk
-        print(self.getEkwipunek)
-        print(f"Twoje ziarna:\n{bcolors.WARNING}{self.getZiarna}{bcolors.ENDC}")
+        # print(self.getEkwipunek)
+        # print(f"{bcolors.WARNING}Twoje ziarna:{bcolors.ENDC}\n{bcolors.OKBLUE}{self.getZiarna}{bcolors.ENDC}")
         # znajdz rolisne z katalogu po nazwie. indeks katalogu...
         roślinyWszystkie = tuple(self.getZiarna.keys())
 
         def szuakanie_indeksu():
-            roślinaInput = input("Wybierz roślinę do zasiania\n>")
+            roślinaInput = input("Wybierz roślinę do zasiania(bez cudzysłowów)\n>")
             # roślinyWszystkie = tuple(self.getZiarna.keys())
             for j in range(len(roślinyWszystkie)):
                 roślina: Roślina = roślinyWszystkie[j]
@@ -121,7 +161,7 @@ class Rolnik:
 
         iZnal = szuakanie_indeksu()
         if iZnal == -1:
-            return "Koniec Fazy Siania."
+            return
         else:
             wybranaRoślina = roślinyWszystkie[iZnal]
 
@@ -147,26 +187,29 @@ class Rolnik:
                     else:
                         print(f"{bcolors.FAIL}Na polu {i} już coś rośnie.{bcolors.ENDC}")
                         continue
-            print(f"{bcolors.WARNING}Zasiano {wybranaRoślina} na możliwych polach spośród {polaDoZasiewu}{bcolors.ENDC}")
+            print(f"{bcolors.WARNING}Zasiano {wybranaRoślina.nazwa} na możliwych polach spośród {polaDoZasiewu}{bcolors.ENDC}")
 
         zasiej_na_polach()
         odpowiedz = input("Czy chcesz siać dalej? T/N\n>")
         if odpowiedz.lower() == "t":
             self.zasiew()
-        else:
-            print("Koniec fazy siania.")
 
     def zbiory(self):
         polaDoZbioru = self.__poleRolnika.polaGotoweDoZbioru()
         # TODO Opłata miała zależeć od rośliny... Ale jeszcze jest stała, odgórna.
         oplata = len(polaDoZbioru) * 10
-        zarobek = 0
+        dochód = 0
         for i in polaDoZbioru:
             p = self.__poleRolnika.getPola()[i]
-            zarobek += p.zbierzPlon()
+            dochód += p.zbierzPlon()
             p.resetuj()
 
-        self.__liczba_monet += zarobek-oplata
+        zarobek = dochód - oplata
+        self.__liczba_monet += zarobek
+        if zarobek > 0:
+            print(f"{bcolors.WARNING}Zarobek z plonów wynosi: {zarobek}.{bcolors.ENDC}")
+        else:
+            print(f"{bcolors.WARNING}Dziś zebrano żadnych plonów.{bcolors.ENDC}")
 
     def podlewanie(self):
         wszystkiePola = self.__poleRolnika
