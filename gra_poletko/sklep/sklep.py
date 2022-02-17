@@ -19,8 +19,11 @@ class Sklep:
     @property
     def getOferta(self):
         # Ladnie sie wyswietla uzytkownikowi
-        c = "\nW sklepie znajdują sie nastepujace produkty:"
-        d = "\n{Produkt: Cena za sztukę}\n"
-        return f"{bcolors.WARNING}{c}{d}{bcolors.ENDC}{bcolors.OKBLUE}{self.getZiarna}{bcolors.ENDC}\n"
+        spacja = "\t"
+        c = "W sklepie znajdują sie nastepujace produkty:"
+        d = "Produkt | Cena za sztukę"
+        return f"{bcolors.WARNING}{spacja}{c}\n" \
+               f"{spacja}{d}{bcolors.ENDC}\n\n" \
+               f"{bcolors.OKBLUE}{spacja}{self.getZiarna}{bcolors.ENDC}\n"
     # def setSrodkiOchrony(self, slownikSrodkowOchronyZCenami):
     #     self.__srodkiOchronyRoslin = slownikSrodkowOchronyZCenami

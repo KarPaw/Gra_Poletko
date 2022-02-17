@@ -52,7 +52,9 @@ class Rolnik:
             if i == 0:
                 print("\tZiarna:")
             elif i == 1:
-                return  # TODO Narazie Środki ochrony są niewidoczne.
+                print(f"{bcolors.UNDERLINE}.........................{bcolors.ENDC}\n")
+
+                return  # TODO Narazie Środki ochrony są niewidoczne. Jak beda trzeba zakomentowac zaznaczone
                 # print("Srodki Ochrony Roslin:")
 
             nazwy_roślin = [roślina.nazwa for roślina in self.__ekwipunek[i].keys()]
@@ -62,15 +64,17 @@ class Rolnik:
                 print(f"\t{bcolors.OKBLUE}{para}{bcolors.ENDC}")
             # for para in self.__ekwipunek[i]:
             #     print(f"\t{bcolors.OKBLUE}{para}{bcolors.ENDC}")
+        # print(f"{bcolors.UNDERLINE}........................{bcolors.ENDC}")
 
     def zakupy(self, sklep: Sklep):
         # Otwieranie
         oferta = sklep.getOferta
         ziarna = sklep.getZiarna
+        spacja = "\t"
 
         def pobierz_odpowiedz():
             while True:
-                odp = input("Czy chcesz kupić coś jeszcze T/N:\n>").lower()
+                odp = input(f"{bcolors.BOLD}{spacja}Czy chcesz kupić coś jeszcze T/N:\n>{bcolors.ENDC}").lower()
                 if odp == "t" or odp == "n":
                     break
             return odp
@@ -89,31 +93,31 @@ class Rolnik:
                     j = roślinyWszystkie.index(ros)
 
             if j == -1:
-                print(bcolors.FAIL + "Nie można dodać do ekwipunku..." + bcolors.ENDC)
+                print(f"{spacja}{bcolors.FAIL}Nie można dodać do ekwipunku...{bcolors.ENDC}")
                 return j
 
             prodEkwipunek = roślinyWszystkie[j]
 
             doZaplaty = ziarna[f"{produkt.capitalize()}"] * liczba
             if doZaplaty == 0:
-                print(f"Nie można sprzedać 0 sztuk")
+                print(f"{spacja}Nie można sprzedać 0 sztuk")
                 return j
             if self.__liczba_monet >= doZaplaty:
                 self.__liczba_monet -= doZaplaty
                 self.__ekwipunek[0][prodEkwipunek] += liczba
-                print(f"{bcolors.WARNING}Zakupiono produkt: {produkt} x {liczba}.{bcolors.ENDC}")
+                print(f"{spacja}{bcolors.WARNING}Zakupiono produkt: {produkt} x {liczba}.{bcolors.ENDC}")
             else:
-                print(f"{bcolors.FAIL}Niewystarczająca liczba monet - masz ich {self.__liczba_monet}.{bcolors.ENDC}")
+                print(f"{spacja}{bcolors.FAIL}Niewystarczająca liczba monet - masz ich {self.__liczba_monet}.{bcolors.ENDC}")
 
             return j
 
         def pojedynczyZakup():
-            print(oferta)
-            produkt = input("Podaj nazwę produktu, który chcesz zakupić (bez cudzysłowów):\n>")
+            print(f"\n{oferta}")
+            produkt = input(f"{bcolors.BOLD}{spacja}Podaj nazwę produktu, który chcesz zakupić (bez cudzysłowów):\n>{bcolors.ENDC}")
             if not produkt:
-                print("Nie wybrano produktu.")
+                print(f"{spacja}Nie wybrano produktu.")
                 pojedynczyZakup()
-            liczba = input("Podaj liczbę sztuk:\n>")
+            liczba = input(f"{bcolors.BOLD}{spacja}Podaj liczbę sztuk:\n>{bcolors.ENDC}")
             # if not liczba or liczba == "0":
             #     print(f"{bcolors.FAIL}Nic nie kupiono.{bcolors.ENDC}")
             #     liczba = 0
@@ -124,14 +128,14 @@ class Rolnik:
                 liczba = 0
 
             if liczba < 0:
-                print(f"{bcolors.FAIL}Niepoprawna liczba sztuk {liczba}.{bcolors.ENDC}")
+                print(f"{spacja}{bcolors.FAIL}Niepoprawna liczba sztuk {liczba}.{bcolors.ENDC}")
 
             czyKupiono = kupZiarna(produkt, liczba)
             return czyKupiono
 
         cK = pojedynczyZakup()
         if cK == -1:
-            print(f"{bcolors.FAIL}Nie dokonano zakupu.{bcolors.ENDC}")
+            print(f"{spacja}{bcolors.FAIL}Nie dokonano zakupu.{bcolors.ENDC}")
 
         odpowiedz = pobierz_odpowiedz()
         if odpowiedz == "t":
@@ -143,10 +147,11 @@ class Rolnik:
         # print(self.getEkwipunek)
         # print(f"{bcolors.WARNING}Twoje ziarna:{bcolors.ENDC}\n{bcolors.OKBLUE}{self.getZiarna}{bcolors.ENDC}")
         # znajdz rolisne z katalogu po nazwie. indeks katalogu...
+        spacja = "\t"
         roślinyWszystkie = tuple(self.getZiarna.keys())
 
         def szuakanie_indeksu():
-            roślinaInput = input("Wybierz roślinę do zasiania(bez cudzysłowów)\n>")
+            roślinaInput = input(f"{bcolors.BOLD}{spacja}Wybierz roślinę do zasiania(bez cudzysłowów)\n>{bcolors.ENDC}")
             # roślinyWszystkie = tuple(self.getZiarna.keys())
             for j in range(len(roślinyWszystkie)):
                 roślina: Roślina = roślinyWszystkie[j]
@@ -156,7 +161,7 @@ class Rolnik:
                 elif not roślinaInput:  # Pusty napis
                     return -1
                 else:
-                    print(f"{bcolors.FAIL}Nie posiadasz takiej sadzonki.\nWybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
+                    print(f"{spacja}{bcolors.FAIL}Nie posiadasz takiej sadzonki.\nWybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
                     szuakanie_indeksu()
 
         iZnal = szuakanie_indeksu()
@@ -167,16 +172,16 @@ class Rolnik:
 
         def zasiej_na_polach():
             polaDoZasiewu = tuple(int(x) for x in
-                                  input("Podaj numery pól do zasiewu oddzielone spacją,\n>").split())
+                                  input(f"{bcolors.BOLD}{spacja}Podaj numery pól do zasiewu oddzielone spacją,\n>{bcolors.ENDC}").split())
 
             # Sprawdza czy Wystarczy sadzonek
             ilePol = len(polaDoZasiewu)
             ileSadzonek = self.getZiarna[wybranaRoślina]
             if ilePol > ileSadzonek:
-                print(f"{bcolors.FAIL}Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.{bcolors.ENDC}")
+                print(f"{spacja}{bcolors.FAIL}Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.{bcolors.ENDC}")
                 zasiej_na_polach()
             elif not ilePol:
-                print("Nie wybrano pól.")
+                print(f"{spacja}Nie wybrano pól.")
             else:
                 for i in polaDoZasiewu:
                     pj: PoleJedno = self.__poleRolnika.getPola()[i-1]
@@ -185,16 +190,17 @@ class Rolnik:
                         self.getZiarna[wybranaRoślina] -= 1
 
                     else:
-                        print(f"{bcolors.FAIL}Na polu {i} już coś rośnie.{bcolors.ENDC}")
+                        print(f"{spacja}{bcolors.FAIL}Na polu {i} już coś rośnie.{bcolors.ENDC}")
                         continue
-            print(f"{bcolors.WARNING}Zasiano {wybranaRoślina.nazwa} na możliwych polach spośród {polaDoZasiewu}{bcolors.ENDC}")
+            print(f"{spacja}{bcolors.WARNING}Zasiano {wybranaRoślina.nazwa} na możliwych polach spośród {polaDoZasiewu}{bcolors.ENDC}")
 
         zasiej_na_polach()
-        odpowiedz = input("Czy chcesz siać dalej? T/N\n>")
+        odpowiedz = input(f"{bcolors.BOLD}{spacja}Czy chcesz siać dalej? T/N\n>{bcolors.ENDC}")
         if odpowiedz.lower() == "t":
             self.zasiew()
 
     def zbiory(self):
+        spacja = "\t"
         polaDoZbioru = self.__poleRolnika.polaGotoweDoZbioru()
         # TODO Opłata miała zależeć od rośliny... Ale jeszcze jest stała, odgórna.
         oplata = len(polaDoZbioru) * 10
@@ -207,11 +213,12 @@ class Rolnik:
         zarobek = dochód - oplata
         self.__liczba_monet += zarobek
         if zarobek > 0:
-            print(f"{bcolors.WARNING}Zarobek z plonów wynosi: {zarobek}.{bcolors.ENDC}")
+            print(f"{spacja}{bcolors.WARNING}Zarobek z plonów wynosi: {zarobek}.{bcolors.ENDC}")
         else:
-            print(f"{bcolors.WARNING}Dziś zebrano żadnych plonów.{bcolors.ENDC}")
+            print(f"{spacja}{bcolors.WARNING}Dziś nie zebrano żadnych plonów.{bcolors.ENDC}")
 
     def podlewanie(self):
+        spacja = "\t"
         wszystkiePola = self.__poleRolnika
         wszystkiePola.resetPodlaniaCalePole()
         doPodlania = wszystkiePola.ktoreNiepodlane()
@@ -226,6 +233,6 @@ class Rolnik:
         # Można wejść w ujemne Saldo, bo najpierw podlewa, potem odejmuje.
 
         if opłata == 0:
-            print(f"{bcolors.WARNING}Żande pola nie wymagały podlewania.{bcolors.ENDC}")
+            print(f"{spacja}{bcolors.WARNING}Żande pola nie wymagały podlewania.{bcolors.ENDC}")
         else:
-            print(f"{bcolors.WARNING}Twoje pola zostały podlane. Pobrano opłatę = {opłata} monet.{bcolors.ENDC}")
+            print(f"{spacja}{bcolors.WARNING}Twoje pola zostały podlane. Pobrano opłatę = {opłata} monet.{bcolors.ENDC}")

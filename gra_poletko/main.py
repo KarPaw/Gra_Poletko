@@ -52,7 +52,7 @@ def dzien():
     faza_siania()
     faza_zbiorów()
     faza_podlewania()
-    print(f"{bcolors.WARNING}Liczba monet na koniec {S.dzienSymulacji}. dnia: {rol.getLiczbaMonet}{bcolors.WARNING}")
+    print(f"{bcolors.OKBLUE}Liczba monet na koniec {S.dzienSymulacji}. dnia: {rol.getLiczbaMonet}{bcolors.ENDC}\n")
     S.dzienSymulacji += 2
     #TODO Do testow co 2 dzien.
 
