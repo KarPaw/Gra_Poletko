@@ -23,29 +23,32 @@ if __name__ == "__main__":
 
     rol = Rolnik(Plansza(10))
 
-    def test_siania_marchwi():
-
-        mar = Marchew()
-        # plansza.zasiej(mar, 1)
-
+    def faza_siania():
         rol.zasiew()
 
-
-    def test_sklepu():
+    def faza_kupna():
         skl = Sklep()
         ustaw_ceny_w_sklepie(skl)
         rol.pokazStan()
         rol.zakupy(skl)
         rol.pokazStan()
 
-    test_sklepu()
+    def faza_zbiorów():
+        rol.zbiory()
 
-    test_siania_marchwi()
+    def faza_podlewania():
+        rol.podlewanie()
 
-    print(rol.getLiczbaMonet)
+    faza_kupna()
+
+    faza_siania()
+
+    print(f"Liczba monet: {rol.getLiczbaMonet}")
     S.dzienSymulacji = 10
-    rol.zbiory()
+    faza_zbiorów()
 
-    print(rol.getLiczbaMonet)
+    print(f"Liczba monet: {rol.getLiczbaMonet}")
+
+    faza_podlewania()
 
     i = 0

@@ -1,3 +1,6 @@
+from gra_poletko.bcolors import bcolors
+
+
 class Sklep:
     __slots__ = ["__ziarna", "__srodkiOchronyRoslin"]
 
@@ -18,6 +21,6 @@ class Sklep:
         # Ladnie sie wyswietla uzytkownikowi
         c = "\nW sklepie znajdują sie nastepujace produkty:"
         d = "\n{Produkt: Cena za sztukę}\n"
-        return f"{c}{d}{self.getZiarna} \n"
+        return f"{c}{d}{bcolors.WARNING}{self.getZiarna}{bcolors.ENDC}\n"
     # def setSrodkiOchrony(self, slownikSrodkowOchronyZCenami):
     #     self.__srodkiOchronyRoslin = slownikSrodkowOchronyZCenami

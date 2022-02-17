@@ -1,5 +1,8 @@
+from gra_poletko.bcolors import bcolors
 from gra_poletko.rośliny.roślina import Roślina
 from gra_poletko.StałeUniwersalne import Singleton as S
+
+
 # from gra_poletko.bcolors import bcolors
 
 
@@ -25,8 +28,19 @@ class PoleJedno:
     def czyPodlano(self):
         return self.__czyPodlane
 
+    # @property
+    # def czyNiepodlano(self):
+    #     return not self.__czyPodlane
+
     def podlej(self):
+        # Opłata za podlewanie:
+        opłata = self.__zasianaRoslina.getCenaWoda.__get__(self.__zasianaRoslina)
         self.__czyPodlane = True
+        return opłata
+
+    def resetPodlania(self):
+        if self.__zasianaRoslina:
+            self.__czyPodlane = False
 
     def zasiej_roślinę(self, roślina: Roślina):
         self.__zasianaRoslina: Roślina = roślina

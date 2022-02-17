@@ -36,6 +36,9 @@ class Marchew(Roślina):
     def getCenaSkup(self):
         return Marchew.skup_cena
 
+    @property
+    def getCenaWoda(self):
+        return Marchew.woda_cena
     # def __str__(self):
     #     return self.getNazwa
 

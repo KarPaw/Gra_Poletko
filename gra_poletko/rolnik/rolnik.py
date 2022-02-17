@@ -24,6 +24,9 @@ class Rolnik:
     def przypiszPoletko(self, pole):
         self.__poleRolnika = pole
 
+    def odejmijMonety(self, n):
+        self.__liczba_monet -= n
+
     @property
     def getLiczbaMonet(self):
         return self.__liczba_monet
@@ -98,7 +101,7 @@ class Rolnik:
         """Na którym polu: liczymy od 1."""
         # Sprawdza, czy masz taką roślinę w ekwipunku i odpowiednio zmniejsza liczbę sztuk
         print(self.getEkwipunek)
-
+        print(f"Twoje ziarna:\n{bcolors.WARNING}{self.getZiarna}{bcolors.ENDC}")
         # znajdz rolisne z katalogu po nazwie. indeks katalogu...
         roślinyWszystkie = tuple(self.getZiarna.keys())
 
@@ -130,7 +133,7 @@ class Rolnik:
             ilePol = len(polaDoZasiewu)
             ileSadzonek = self.getZiarna[wybranaRoślina]
             if ilePol > ileSadzonek:
-                print(f"Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.")
+                print(f"{bcolors.FAIL}Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.{bcolors.ENDC}")
                 zasiej_na_polach()
             elif not ilePol:
                 print("Nie wybrano pól.")
@@ -142,9 +145,9 @@ class Rolnik:
                         self.getZiarna[wybranaRoślina] -= 1
 
                     else:
-                        print(f"Na polu {i} już coś rośnie.")
+                        print(f"{bcolors.FAIL}Na polu {i} już coś rośnie.{bcolors.ENDC}")
                         continue
-            print(f"Zasiano {wybranaRoślina} na możliwych polach spośród {polaDoZasiewu}")
+            print(f"{bcolors.WARNING}Zasiano {wybranaRoślina} na możliwych polach spośród {polaDoZasiewu}{bcolors.ENDC}")
 
         zasiej_na_polach()
         odpowiedz = input("Czy chcesz siać dalej? T/N\n>")
@@ -166,4 +169,20 @@ class Rolnik:
         self.__liczba_monet += zarobek-oplata
 
     def podlewanie(self):
-        pass
+        wszystkiePola = self.__poleRolnika
+        wszystkiePola.resetPodlaniaCalePole()
+        doPodlania = wszystkiePola.ktoreNiepodlane()
+        # opłata = doPodlania.podlej()
+        opłata = 0
+        for p in doPodlania:
+            opłata += p.podlej()
+
+        # TODO Na poczatku nowego dnia reset Podlania w <main>?
+        # TODO Na ten moment reset podlania jest przed podlewaniem.
+        self.odejmijMonety(opłata)
+        # Można wejść w ujemne Saldo, bo najpierw podlewa, potem odejmuje.
+
+        if opłata == 0:
+            print(f"{bcolors.WARNING}Żande pola nie wymagały podlewania.{bcolors.ENDC}")
+        else:
+            print(f"{bcolors.WARNING}Twoje pola zostały podlane. Pobrano opłatę = {opłata} monet.{bcolors.ENDC}")

@@ -8,3 +8,14 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+if __name__ == "__main__":
+    print(f"{bcolors.HEADER} Lorem ipsum {bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE} Lorem ipsum {bcolors.ENDC}")
+    print(f"{bcolors.OKCYAN} Lorem ipsum {bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN} Lorem ipsum {bcolors.ENDC}")
+    print(f"{bcolors.WARNING} Lorem ipsum Zolty? {bcolors.ENDC}")
+    print(f"{bcolors.FAIL} Lorem ipsum {bcolors.ENDC}")
+    print(f"{bcolors.BOLD} Lorem ipsum {bcolors.ENDC}")
+    print(f"{bcolors.UNDERLINE} Lorem ipsum {bcolors.ENDC}")
