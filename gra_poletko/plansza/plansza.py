@@ -13,8 +13,6 @@ class Plansza:
         for p in self.__pola:
             if not p.czyPodlano:
                 niepodlane.append(p)
-
-        # return [pole.czyNiepodlano for pole in self.__pola]
         return niepodlane
 
     def polaGotoweDoZbioru(self):
@@ -24,7 +22,6 @@ class Plansza:
             p = self.__pola[i]
             if p.czy_gotowe_do_zbioru():
                 gotowePola.append(i)
-
         return gotowePola
 
     def getPola(self):

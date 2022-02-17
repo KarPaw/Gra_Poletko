@@ -1,20 +1,20 @@
-from gra_poletko.bcolors import bcolors
 from gra_poletko.rośliny.roślina import Roślina
 from gra_poletko.StałeUniwersalne import Singleton as S
-
-
-# from gra_poletko.bcolors import bcolors
 
 
 class PoleJedno:
     __slots__ = ["__zasianaRoslina", "__kiedyZasiano", "__czyPodlane", "__gotowe", "__id"]
 
-    def __init__(self, id):
-        self.__id = id
+    def __init__(self, ID):
+        self.__id = ID
         self.__zasianaRoslina = None
         self.__kiedyZasiano = None
         self.__czyPodlane = True
         self.__gotowe = False
+
+    @property
+    def ID(self):
+        return self.__id
 
     @property
     def coZasiano(self):
@@ -27,10 +27,6 @@ class PoleJedno:
     @property
     def czyPodlano(self):
         return self.__czyPodlane
-
-    # @property
-    # def czyNiepodlano(self):
-    #     return not self.__czyPodlane
 
     def podlej(self):
         # Opłata za podlewanie:
@@ -51,7 +47,6 @@ class PoleJedno:
         if not posiana:
             return self.__gotowe
         potrzebneDni = posiana.getCzasWegetacji.__get__(posiana)
-        # TODO ObecnyDzien
         obecnyDzien = S.dzienSymulacji
         ileMinelo = obecnyDzien - self.kiedyZasiano
 

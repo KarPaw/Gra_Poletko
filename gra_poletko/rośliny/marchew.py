@@ -19,7 +19,7 @@ class Marchew(Roślina):
             , Marchew.woda_cena
         )
 
-    #bez powstania obiektu
+    # bez powstania obiektu
     @staticmethod
     def cenaWSklepie():
         return Marchew.nasiono_cena
@@ -42,20 +42,3 @@ class Marchew(Roślina):
 
     def __str__(self):
         return Marchew.nazwa
-
-#
-if __name__ == "__main__":
-    m1 = Marchew()
-    # print(isinstance(m1, Roślina))
-    # print(Marchew())
-
-    slownik = {
-        Marchew(): 7
-    }
-
-    lll = [roślina.nazwa for roślina in slownik.keys()]
-    pairs = zip(lll, slownik.values())
-    for i in pairs:
-        print(i)
-    # for i in k:
-    #     print(i)

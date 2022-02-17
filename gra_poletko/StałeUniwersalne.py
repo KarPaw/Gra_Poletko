@@ -20,3 +20,4 @@ class SingletonMeta(type):
 
 class Singleton(metaclass=SingletonMeta):
     dzienSymulacji = 0
+    spacja = "\t"

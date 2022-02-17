@@ -16,10 +16,10 @@ def ustaw_ceny_w_sklepie(sklep):
     sklep.setZiarna(ziarnaCeny)
 
 
-def ustawienia_początkowe():
+def ustawienia_początkowe(wielkosc_planszy: int):
     S.dzienSymulacji = 1
     global rol
-    rol = Rolnik(Plansza(10))
+    rol = Rolnik(Plansza(wielkosc_planszy))
     global skl
     skl = Sklep()
     ustaw_ceny_w_sklepie(skl)
@@ -53,20 +53,19 @@ def dzien():
     faza_zbiorów()
     faza_podlewania()
     print(f"{bcolors.OKBLUE}Liczba monet na koniec {S.dzienSymulacji}. dnia: {rol.getLiczbaMonet}{bcolors.ENDC}\n")
-    S.dzienSymulacji += 2
-    #TODO Do testow co 2 dzien.
+    S.dzienSymulacji += 1
 
 
-def symuluj(liczbaDni):
-    print(f"{bcolors.HEADER}Gra trwająca {liczbaDni} dni rozpoczyna się.\n{bcolors.ENDC}")
-    for k in range(liczbaDni):
+def symuluj(liczba_dni: int):
+    print(f"{bcolors.HEADER}Gra trwająca {liczba_dni} dni rozpoczyna się.\n{bcolors.ENDC}")
+    for k in range(liczba_dni):
         print(f"{bcolors.HEADER}Dzień dobry!\nJest dzień {S.dzienSymulacji}.")
         dzien()
 
 
 if __name__ == "__main__":
 
-    ustawienia_początkowe()
-    symuluj(3)
+    ustawienia_początkowe(wielkosc_planszy=10)
+    symuluj(liczba_dni=5)
 
     i = 0

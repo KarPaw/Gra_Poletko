@@ -2,6 +2,7 @@ from gra_poletko.bcolors import bcolors
 from gra_poletko.sklep.sklep import Sklep
 from gra_poletko.rośliny.roślina import Roślina
 from gra_poletko.plansza.poleJedno import PoleJedno
+from gra_poletko.StałeUniwersalne import Singleton as S
 
 
 def zmienDodatniaNaInteger(elt):
@@ -81,11 +82,10 @@ class Rolnik:
         # Otwieranie
         oferta = sklep.getOferta
         ziarna = sklep.getZiarna
-        spacja = "\t"
 
         def pobierz_odpowiedz():
             while True:
-                odp = input(f"{bcolors.BOLD}{spacja}Czy chcesz kupić coś jeszcze T/N:\n>{bcolors.ENDC}").lower()
+                odp = input(f"{bcolors.BOLD}{S.spacja}Czy chcesz kupić coś jeszcze T/N:\n>{bcolors.ENDC}").lower()
                 if odp == "t" or odp == "n":
                     break
             return odp
@@ -105,51 +105,44 @@ class Rolnik:
                     j = roślinyWszystkie.index(ros)
 
             if j == -1:
-                print(f"{spacja}{bcolors.FAIL}Nie można dodać do ekwipunku...{bcolors.ENDC}")
+                print(f"{S.spacja}{bcolors.FAIL}Nie można dodać do ekwipunku...{bcolors.ENDC}")
                 return j
 
             prodEkwipunek = roślinyWszystkie[j]
 
             doZaplaty = ziarna[f"{produkt.capitalize()}"] * liczba
             if doZaplaty == 0:
-                print(f"{spacja}Nie można sprzedać 0 sztuk")
+                print(f"{S.spacja}Nie można sprzedać 0 sztuk")
                 return j
             if self.__liczba_monet >= doZaplaty:
                 self.__liczba_monet -= doZaplaty
                 self.__ekwipunek[0][prodEkwipunek] += liczba
-                print(f"{spacja}{bcolors.WARNING}Zakupiono produkt: {produkt} x {liczba}.{bcolors.ENDC}")
+                print(f"{S.spacja}{bcolors.WARNING}Zakupiono produkt: {produkt} x {liczba}.{bcolors.ENDC}")
             else:
-                print(f"{spacja}{bcolors.FAIL}Niewystarczająca liczba monet - masz ich {self.__liczba_monet}.{bcolors.ENDC}")
+                print(f"{S.spacja}{bcolors.FAIL}Niewystarczająca liczba monet - masz ich {self.__liczba_monet}.{bcolors.ENDC}")
 
             return j
 
         def pojedynczyZakup():
             print(f"\n{oferta}")
-            produkt = input(f"{bcolors.BOLD}{spacja}Podaj nazwę produktu, który chcesz zakupić (bez cudzysłowów):\n>{bcolors.ENDC}")
+            produkt = input(f"{bcolors.BOLD}{S.spacja}Podaj nazwę produktu, który chcesz zakupić (bez cudzysłowów):\n>{bcolors.ENDC}")
             if not produkt:
-                print(f"{spacja}{bcolors.FAIL}Nie wybrano produktu.{bcolors.ENDC}")
+                print(f"{S.spacja}{bcolors.FAIL}Nie wybrano produktu.{bcolors.ENDC}")
                 return -1
-            liczba = input(f"{bcolors.BOLD}{spacja}Podaj liczbę sztuk:\n>{bcolors.ENDC}")
-            # if not liczba or liczba == "0":
-            #     print(f"{bcolors.FAIL}Nic nie kupiono.{bcolors.ENDC}")
-            #     liczba = 0
-
-            # try:
-            #     liczba = int(liczba)
-            # except ValueError:
-            #     liczba = 0
+            liczba = input(f"{bcolors.BOLD}{S.spacja}Podaj liczbę sztuk:\n>{bcolors.ENDC}")
             liczba = zmienDodatniaNaInteger(liczba)
+
             if not liczba:
-                print(f"{spacja}{bcolors.FAIL}Nie podano liczby lub liczba = 0.{bcolors.ENDC}")
+                print(f"{S.spacja}{bcolors.FAIL}Nie podano liczby lub liczba = 0.{bcolors.ENDC}")
             elif liczba <= 0:
-                print(f"{spacja}{bcolors.FAIL}Niepoprawna liczba sztuk {liczba}.{bcolors.ENDC}")
+                print(f"{S.spacja}{bcolors.FAIL}Niepoprawna liczba sztuk {liczba}.{bcolors.ENDC}")
 
             czyKupiono = kupZiarna(produkt, liczba)
             return czyKupiono
 
         cK = pojedynczyZakup()
         if cK == -1:
-            print(f"{spacja}{bcolors.FAIL}Nie dokonano zakupu.{bcolors.ENDC}")
+            print(f"{S.spacja}{bcolors.FAIL}Nie dokonano zakupu.{bcolors.ENDC}")
 
         odpowiedz = pobierz_odpowiedz()
         if odpowiedz == "t":
@@ -157,19 +150,14 @@ class Rolnik:
 
     def zasiew(self):
         """Na którym polu: liczymy od 1."""
-        # Sprawdza, czy masz taką roślinę w ekwipunku i odpowiednio zmniejsza liczbę sztuk
-        # print(self.getEkwipunek)
-        # print(f"{bcolors.WARNING}Twoje ziarna:{bcolors.ENDC}\n{bcolors.OKBLUE}{self.getZiarna}{bcolors.ENDC}")
-        # znajdz rolisne z katalogu po nazwie. indeks katalogu...
-        spacja = "\t"
+
         roślinyWszystkie = tuple(self.getZiarna.keys())
 
         def szuakanie_indeksu():
-            roślinaInput = input(f"{bcolors.BOLD}{spacja}Wybierz roślinę do zasiania(bez cudzysłowów)\n>{bcolors.ENDC}")
-            # roślinyWszystkie = tuple(self.getZiarna.keys())
+            roślinaInput = input(f"{bcolors.BOLD}{S.spacja}Wybierz roślinę do zasiania(bez cudzysłowów)\n>{bcolors.ENDC}")
 
-            if not roślinaInput:  # TODO Pusty napis
-                print(f"{spacja}{bcolors.FAIL}Nie wprowadzono nazwy rośliny.{bcolors.ENDC}")
+            if not roślinaInput:  # Pusty napis
+                print(f"{S.spacja}{bcolors.FAIL}Nie wprowadzono nazwy rośliny.{bcolors.ENDC}")
                 return -1
 
             for j in range(len(roślinyWszystkie)):
@@ -177,42 +165,43 @@ class Rolnik:
                 if roślina.getNazwa.__get__(roślina).lower() == roślinaInput.lower():
                     return j
                 else:
-                    print(f"{spacja}{bcolors.FAIL}Nie posiadasz takiej sadzonki.\n{spacja}Wybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
+                    print(f"{S.spacja}{bcolors.FAIL}Nie posiadasz takiej sadzonki.\n{S.spacja}Wybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
                     return -1
 
-        def zasiej_na_polach(wybranaRoślina):
+        def zasiej_na_polach(wR):
             polaDoZasiewu = tuple(zmienDodatniaNaInteger(x)
                                   for x in
-                                  input(f"{bcolors.BOLD}{spacja}Podaj numery pól do zasiewu oddzielone spacją,\n>{bcolors.ENDC}").split()
+                                  input(f"{bcolors.BOLD}{S.spacja}Podaj numery pól do zasiewu oddzielone spacją,\n>{bcolors.ENDC}").split()
                                   if zmienDodatniaNaInteger(x) is not None)
 
             # Sprawdza czy Wystarczy sadzonek
             ilePol = len(polaDoZasiewu)
-            ileSadzonek = self.getZiarna[wybranaRoślina]
+            ileSadzonek = self.getZiarna[wR]
             if not ilePol:
-                print(f"{spacja}{bcolors.FAIL}Nie wybrano pól.{bcolors.ENDC}")
+                print(f"{S.spacja}{bcolors.FAIL}Nie wybrano pól.{bcolors.ENDC}")
                 return
             if ilePol > ileSadzonek:
-                print(f"{spacja}{bcolors.FAIL}Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.{bcolors.ENDC}")
-                zasiej_na_polach(wybranaRoślina)
+                print(f"{S.spacja}{bcolors.FAIL}Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.{bcolors.ENDC}")
+                zasiej_na_polach(wR)
             else:
                 # indeks nal. [1, n]
                 for indeks in polaDoZasiewu:
-                    if indeks > len(polaDoZasiewu):
-                        print(f"{bcolors.FAIL}{spacja}Zły numer pola = {indeks}. Przechodzę do kolejnego.{bcolors.ENDC}")
+                    if indeks > self.__poleRolnika.getPola()[-1].ID:
+                        print(f"{bcolors.FAIL}{S.spacja}Nie ma pola o numerze = {indeks}. Przechodzę do kolejnego.{bcolors.ENDC}")
                         continue
-                    pj: PoleJedno = self.__poleRolnika.getPola()[indeks-1]
-                    if not pj.coZasiano:
-                        pj.zasiej_roślinę(wybranaRoślina)
-                        self.getZiarna[wybranaRoślina] -= 1
-                        print(f"{spacja}{bcolors.WARNING}Zasiano {wybranaRoślina.nazwa} na polu {indeks}.{bcolors.ENDC}")
                     else:
-                        print(f"{spacja}{bcolors.FAIL}Na polu {indeks} już coś rośnie.{bcolors.ENDC}")
+                        pj: PoleJedno = self.__poleRolnika.getPola()[indeks-1]
+                    if not pj.coZasiano:
+                        pj.zasiej_roślinę(wR)
+                        self.getZiarna[wR] -= 1
+                        print(f"{S.spacja}{bcolors.WARNING}Zasiano {wR.nazwa} na polu {indeks}.{bcolors.ENDC}")
+                    else:
+                        print(f"{S.spacja}{bcolors.FAIL}Na polu {indeks} już coś rośnie.{bcolors.ENDC}")
                         continue
 
         def pobierz_odpowiedz():
             while True:
-                odp = input(f"{bcolors.BOLD}{spacja}Czy chcesz siać dalej? T/N\n>{bcolors.ENDC}").lower()
+                odp = input(f"{bcolors.BOLD}{S.spacja}Czy chcesz siać dalej? T/N\n>{bcolors.ENDC}").lower()
                 if odp == "t" or odp == "n":
                     break
             return odp
@@ -228,7 +217,6 @@ class Rolnik:
             self.zasiew()
 
     def zbiory(self):
-        spacja = "\t"
         polaDoZbioru = self.__poleRolnika.polaGotoweDoZbioru()
         # TODO Opłata miała zależeć od rośliny... Ale jeszcze jest stała, odgórna.
         oplata = len(polaDoZbioru) * 10
@@ -241,26 +229,23 @@ class Rolnik:
         zarobek = dochód - oplata
         self.__liczba_monet += zarobek
         if zarobek > 0:
-            print(f"{spacja}{bcolors.WARNING}Zarobek z plonów wynosi: {zarobek}.{bcolors.ENDC}")
+            print(f"{S.spacja}{bcolors.WARNING}Zarobek z plonów wynosi: {zarobek}.{bcolors.ENDC}")
         else:
-            print(f"{spacja}{bcolors.WARNING}Dziś nie zebrano żadnych plonów.{bcolors.ENDC}")
+            print(f"{S.spacja}{bcolors.WARNING}Dziś nie zebrano żadnych plonów.{bcolors.ENDC}")
 
     def podlewanie(self):
-        spacja = "\t"
+        # Reset podlania jest przed podlewaniem.
         wszystkiePola = self.__poleRolnika
         wszystkiePola.resetPodlaniaCalePole()
         doPodlania = wszystkiePola.ktoreNiepodlane()
-        # opłata = doPodlania.podlej()
         opłata = 0
         for p in doPodlania:
             opłata += p.podlej()
 
-        # TODO Na poczatku nowego dnia reset Podlania w <main>?
-        # TODO Na ten moment reset podlania jest przed podlewaniem.
         self.odejmijMonety(opłata)
         # Można wejść w ujemne Saldo, bo najpierw podlewa, potem odejmuje.
 
         if opłata == 0:
-            print(f"{spacja}{bcolors.WARNING}Żande pola nie wymagały podlewania.{bcolors.ENDC}")
+            print(f"{S.spacja}{bcolors.WARNING}Żande pola nie wymagały podlewania.{bcolors.ENDC}")
         else:
-            print(f"{spacja}{bcolors.WARNING}Twoje pola zostały podlane. Pobrano opłatę = {opłata} monet.{bcolors.ENDC}")
+            print(f"{S.spacja}{bcolors.WARNING}Twoje pola zostały podlane. Pobrano opłatę = {opłata} monet.{bcolors.ENDC}")

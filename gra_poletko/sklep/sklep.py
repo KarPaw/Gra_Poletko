@@ -1,4 +1,5 @@
 from gra_poletko.bcolors import bcolors
+from gra_poletko.StałeUniwersalne import Singleton as S
 
 
 class Sklep:
@@ -11,6 +12,9 @@ class Sklep:
     def setZiarna(self, slownikZiarnoCena: dict):
         self.__ziarna = slownikZiarnoCena
 
+    # def setSrodkiOchrony(self, slownikSrodkowOchronyZCenami: dict):
+    #     self.__srodkiOchronyRoslin = slownikSrodkowOchronyZCenami
+
     @property
     def getZiarna(self):
         # Do implementacji
@@ -19,11 +23,9 @@ class Sklep:
     @property
     def getOferta(self):
         # Ladnie sie wyswietla uzytkownikowi
-        spacja = "\t"
+        # TODO spacja = "\t"
         c = "W sklepie znajdują sie nastepujace produkty:"
         d = "Produkt | Cena za sztukę"
-        return f"{bcolors.WARNING}{spacja}{c}\n" \
-               f"{spacja}{d}{bcolors.ENDC}\n\n" \
-               f"{bcolors.OKBLUE}{spacja}{self.getZiarna}{bcolors.ENDC}\n"
-    # def setSrodkiOchrony(self, slownikSrodkowOchronyZCenami):
-    #     self.__srodkiOchronyRoslin = slownikSrodkowOchronyZCenami
+        return f"{bcolors.WARNING}{S.spacja}{c}\n" \
+               f"{S.spacja}{d}{bcolors.ENDC}\n\n" \
+               f"{bcolors.OKBLUE}{S.spacja}{self.getZiarna}{bcolors.ENDC}\n"
