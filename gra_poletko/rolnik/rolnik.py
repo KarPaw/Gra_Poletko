@@ -167,24 +167,20 @@ class Rolnik:
         def szuakanie_indeksu():
             roślinaInput = input(f"{bcolors.BOLD}{spacja}Wybierz roślinę do zasiania(bez cudzysłowów)\n>{bcolors.ENDC}")
             # roślinyWszystkie = tuple(self.getZiarna.keys())
+
+            if not roślinaInput:  # TODO Pusty napis
+                print(f"{spacja}{bcolors.FAIL}Nie wprowadzono nazwy rośliny.{bcolors.ENDC}")
+                return -1
+
             for j in range(len(roślinyWszystkie)):
                 roślina: Roślina = roślinyWszystkie[j]
                 if roślina.getNazwa.__get__(roślina).lower() == roślinaInput.lower():
-                    # iZnal = j
                     return j
-                elif not roślinaInput:  # Pusty napis
-                    return -1
                 else:
-                    print(f"{spacja}{bcolors.FAIL}Nie posiadasz takiej sadzonki.\nWybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
-                    szuakanie_indeksu()
+                    print(f"{spacja}{bcolors.FAIL}Nie posiadasz takiej sadzonki.\n{spacja}Wybierz inną lub wprowadź pusty napis.{bcolors.ENDC}")
+                    return -1
 
-        iZnal = szuakanie_indeksu()
-        if iZnal == -1:
-            return
-        else:
-            wybranaRoślina = roślinyWszystkie[iZnal]
-
-        def zasiej_na_polach():
+        def zasiej_na_polach(wybranaRoślina):
             polaDoZasiewu = tuple(zmienDodatniaNaInteger(x)
                                   for x in
                                   input(f"{bcolors.BOLD}{spacja}Podaj numery pól do zasiewu oddzielone spacją,\n>{bcolors.ENDC}").split()
@@ -193,14 +189,18 @@ class Rolnik:
             # Sprawdza czy Wystarczy sadzonek
             ilePol = len(polaDoZasiewu)
             ileSadzonek = self.getZiarna[wybranaRoślina]
+            if not ilePol:
+                print(f"{spacja}{bcolors.FAIL}Nie wybrano pól.{bcolors.ENDC}")
+                return
             if ilePol > ileSadzonek:
                 print(f"{spacja}{bcolors.FAIL}Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.{bcolors.ENDC}")
-                zasiej_na_polach()
-            elif not ilePol:
-                print(f"{spacja}{bcolors.FAIL}Nie wybrano pól.{bcolors.ENDC}")
+                zasiej_na_polach(wybranaRoślina)
             else:
                 # indeks nal. [1, n]
                 for indeks in polaDoZasiewu:
+                    if indeks > len(polaDoZasiewu):
+                        print(f"{bcolors.FAIL}{spacja}Zły numer pola = {indeks}. Przechodzę do kolejnego.{bcolors.ENDC}")
+                        continue
                     pj: PoleJedno = self.__poleRolnika.getPola()[indeks-1]
                     if not pj.coZasiano:
                         pj.zasiej_roślinę(wybranaRoślina)
@@ -209,7 +209,6 @@ class Rolnik:
                     else:
                         print(f"{spacja}{bcolors.FAIL}Na polu {indeks} już coś rośnie.{bcolors.ENDC}")
                         continue
-        zasiej_na_polach()
 
         def pobierz_odpowiedz():
             while True:
@@ -217,6 +216,12 @@ class Rolnik:
                 if odp == "t" or odp == "n":
                     break
             return odp
+
+        iZnal = szuakanie_indeksu()
+        if iZnal != -1:
+            wybranaRoślina = roślinyWszystkie[iZnal]
+            zasiej_na_polach(wybranaRoślina)
+
         odpowiedz = pobierz_odpowiedz()
 
         if odpowiedz.lower() == "t":
