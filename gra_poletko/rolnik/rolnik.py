@@ -4,6 +4,17 @@ from gra_poletko.rośliny.roślina import Roślina
 from gra_poletko.plansza.poleJedno import PoleJedno
 
 
+def zmienDodatniaNaInteger(elt):
+    try:
+        liczba = int(elt)
+        if liczba <= 0:
+            return None
+    except ValueError:
+        liczba = None
+
+    return liczba
+
+
 class Rolnik:
 
     def __init__(self, plansza):
@@ -84,8 +95,9 @@ class Rolnik:
             # Szukanie Indeksu W krotce
             roślinyWszystkie = tuple(self.getZiarna.keys())
             j = -1
-
-            if liczba <= 0:
+            if not liczba:
+                return j
+            elif liczba <= 0:
                 return j
 
             for ros in roślinyWszystkie:
@@ -115,19 +127,21 @@ class Rolnik:
             print(f"\n{oferta}")
             produkt = input(f"{bcolors.BOLD}{spacja}Podaj nazwę produktu, który chcesz zakupić (bez cudzysłowów):\n>{bcolors.ENDC}")
             if not produkt:
-                print(f"{spacja}Nie wybrano produktu.")
-                pojedynczyZakup()
+                print(f"{spacja}{bcolors.FAIL}Nie wybrano produktu.{bcolors.ENDC}")
+                return -1
             liczba = input(f"{bcolors.BOLD}{spacja}Podaj liczbę sztuk:\n>{bcolors.ENDC}")
             # if not liczba or liczba == "0":
             #     print(f"{bcolors.FAIL}Nic nie kupiono.{bcolors.ENDC}")
             #     liczba = 0
 
-            try:
-                liczba = int(liczba)
-            except ValueError:
-                liczba = 0
-
-            if liczba < 0:
+            # try:
+            #     liczba = int(liczba)
+            # except ValueError:
+            #     liczba = 0
+            liczba = zmienDodatniaNaInteger(liczba)
+            if not liczba:
+                print(f"{spacja}{bcolors.FAIL}Nie podano liczby lub liczba = 0.{bcolors.ENDC}")
+            elif liczba <= 0:
                 print(f"{spacja}{bcolors.FAIL}Niepoprawna liczba sztuk {liczba}.{bcolors.ENDC}")
 
             czyKupiono = kupZiarna(produkt, liczba)
@@ -171,8 +185,10 @@ class Rolnik:
             wybranaRoślina = roślinyWszystkie[iZnal]
 
         def zasiej_na_polach():
-            polaDoZasiewu = tuple(int(x) for x in
-                                  input(f"{bcolors.BOLD}{spacja}Podaj numery pól do zasiewu oddzielone spacją,\n>{bcolors.ENDC}").split())
+            polaDoZasiewu = tuple(zmienDodatniaNaInteger(x)
+                                  for x in
+                                  input(f"{bcolors.BOLD}{spacja}Podaj numery pól do zasiewu oddzielone spacją,\n>{bcolors.ENDC}").split()
+                                  if zmienDodatniaNaInteger(x) is not None)
 
             # Sprawdza czy Wystarczy sadzonek
             ilePol = len(polaDoZasiewu)
@@ -181,21 +197,28 @@ class Rolnik:
                 print(f"{spacja}{bcolors.FAIL}Zla liczba pól = {ilePol}. Masz tylko {ileSadzonek} sadzonek.{bcolors.ENDC}")
                 zasiej_na_polach()
             elif not ilePol:
-                print(f"{spacja}Nie wybrano pól.")
+                print(f"{spacja}{bcolors.FAIL}Nie wybrano pól.{bcolors.ENDC}")
             else:
-                for i in polaDoZasiewu:
-                    pj: PoleJedno = self.__poleRolnika.getPola()[i-1]
+                # indeks nal. [1, n]
+                for indeks in polaDoZasiewu:
+                    pj: PoleJedno = self.__poleRolnika.getPola()[indeks-1]
                     if not pj.coZasiano:
                         pj.zasiej_roślinę(wybranaRoślina)
                         self.getZiarna[wybranaRoślina] -= 1
-
+                        print(f"{spacja}{bcolors.WARNING}Zasiano {wybranaRoślina.nazwa} na polu {indeks}.{bcolors.ENDC}")
                     else:
-                        print(f"{spacja}{bcolors.FAIL}Na polu {i} już coś rośnie.{bcolors.ENDC}")
+                        print(f"{spacja}{bcolors.FAIL}Na polu {indeks} już coś rośnie.{bcolors.ENDC}")
                         continue
-            print(f"{spacja}{bcolors.WARNING}Zasiano {wybranaRoślina.nazwa} na możliwych polach spośród {polaDoZasiewu}{bcolors.ENDC}")
-
         zasiej_na_polach()
-        odpowiedz = input(f"{bcolors.BOLD}{spacja}Czy chcesz siać dalej? T/N\n>{bcolors.ENDC}")
+
+        def pobierz_odpowiedz():
+            while True:
+                odp = input(f"{bcolors.BOLD}{spacja}Czy chcesz siać dalej? T/N\n>{bcolors.ENDC}").lower()
+                if odp == "t" or odp == "n":
+                    break
+            return odp
+        odpowiedz = pobierz_odpowiedz()
+
         if odpowiedz.lower() == "t":
             self.zasiew()
 
